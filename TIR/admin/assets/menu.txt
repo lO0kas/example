@@ -1,0 +1,7 @@
+domov::Aktualilty
+spravy::Správy
+sluzby::Služby
+onas::O nás
+kontakt::Kontakt
+galeria::Galéria
+forum::Fórum
