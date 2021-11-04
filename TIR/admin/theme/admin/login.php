@@ -1,24 +1,32 @@
-<?php include '../../assets/hlavicka.php' ?>
-<?php
-    $inputname = $_POST['name'];
-    $inputpassword = $_POST['password'];
-    $prihlasenyuzivazel = false;
-    $riadkysuboru = file('users.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    foreach ($riadkysuboru as $riadok)
-    {
-        list($name, $password, $post) = explode('::', $riadok);
-        if($inputname == $name && $inputpassword == $password){
-            $_SESSION["name"] = $inputname;
-            $_SESSION["password"] = $inputpassword;
-            $_SESSION["post"] = $post;
-            $prihlasenyuzivazel = true;
-            header('Location: ../domov');
-            die();
-        }
+<?php 
+    session_start();
+    include '../../../config/database.php';
+
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $sql = "SELECT * FROM uzivatelia WHERE login = '".$username."'";
+    $result = $conn->query($sql);
+    if($result->num_rows == 0){
+        $_SESSION['error'] = "nespravne meno alebo heslo";
+        header('Location:index.php?login='.$username.'');
+        die;
+    }else if($result->num_rows > 1){
+        $_SESSION['error'] = "nastala chyba na nasej strane";
+        header('Location:index.php?login='.$username.'');
+        die;
     }
-    if($prihlasenyuzivazel == false){
-        echo '<p style="color: red">Nesprávne meno alebo heslo</p>';
-        echo '<a href="index.php">Naspäť</a>';
+    $row = $result->fetch_assoc();
+
+    $passwordVerify = password_verify($password,$row['heslo']);
+
+    if($passwordVerify === TRUE){
+        $_SESSION['user'] = $row;
+        header('Location:../domov');
+        die;
+    }else{
+        $_SESSION['error'] = "nespravne meno alebo heslo";
+        header('Location:index.php?login='.$username.'');
+        die;
     }
-?>
-<?php include '../../assets/paticka.php' ?>
+
