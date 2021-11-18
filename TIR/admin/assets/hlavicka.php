@@ -1,5 +1,10 @@
 <?php
-session_start();
+require '../../../functions/functions.php';
+
+if(isset($_GET['logout'])){
+    session_unset('user');
+    header('Location:../admin');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,5 +47,16 @@ foreach ($menu as $odkaz => $hodnota)
 ?>
         </ul>
     </div>
+    <?php
+        if(isset($_SESSION['user'])){
+            echo '<a href="index.php?logout">logout</a>';
+        }
+    ?>
 </nav>
+<?php
+      if(isset($_SESSION['flashmessage'])){
+        echo $_SESSION['flashmessage']['message'];
+        session_unset('flashmssage');
+      }
+    ?>
 <div class="container">

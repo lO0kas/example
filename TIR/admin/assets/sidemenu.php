@@ -1,9 +1,14 @@
+<?php
+    if(!isset($_SESSION['user'])){
+        header('Location:../admin');
+    }
+?>
 <div class="row">
 <div class="wrapper w-25 p-3 col-xs-6 text-center">
     <nav class="sidebar">
         <div class="sidebar-header">
-            <h3> <?php echo ' '.$_SESSION["name"]; ?></h3>
-            <h5 style="color: gray;"> <?php echo ' '.$_SESSION["post"]; ?></h2>
+            <h3> <?php echo ' '.$_SESSION['user']["meno"]; ?></h3>
+            <h5 style="color: gray;"> <?php echo ' '.$_SESSION["user"]['login']; ?></h2>
         </div>
         <ul class="list-unstyled components">
             <?php

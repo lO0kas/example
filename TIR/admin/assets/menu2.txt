@@ -1,5 +1,4 @@
 domov::Aktualilty
 galeria::Fotogaléria
 forum::Blog
-uzivatelia::Užívatelia
-logout::Odhlásiť
+users::Užívatelia
