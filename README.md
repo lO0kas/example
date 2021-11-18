@@ -1,5 +1,5 @@
 # example
-git token = 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
+git token = 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
 
 
 
